@@ -8,14 +8,14 @@
   text-decoration: none;
   }
   :root{
-  --body-color:#e8d5b7;
+  --body-color:#d9ead3;
   --text-color:#0e2431;
   --link-color:#f9b248;
   --secondary-color:#fc3a52;
-  --nav-color:#0e2431;
+  --nav-color:#231010;
   }
   body{
-  background-color: #fff;
+  background-color: #d9ead3;
   color: var(--text-color);
   }
   nav{
@@ -25,14 +25,16 @@
   }
   nav a{
   padding: 0 2rem;
-  color: #fff !important;
+  color: #d9ead3 !important;
   }
   h4{
   background-color: var(--body-color);
   border-radius: 0.3rem;
   margin-left:2rem;
   margin-top:2rem;
-  padding:0.2rem 0.5rem;
+  padding:0.5rem 0.75rem;
+  font-weight:bold;
+  box-shadow:5px 5px #a7a7a7;
   }
   /*Styling Sign Up Form*/
   #signup-form{
@@ -43,4 +45,7 @@
   .btn{
   background-color:var(--nav-color);
   color: var(--body-color);
+  }
+  #login-container{
+  border: 5px solid #231010;
   }
