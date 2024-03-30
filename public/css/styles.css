@@ -1,0 +1,46 @@
+*{
+  margin:0;
+  padding: 0;
+  box-sizing: border-box;
+  }
+  a,a:hover,a:link,a:visited{
+  color:var(--nav-color);
+  text-decoration: none;
+  }
+  :root{
+  --body-color:#e8d5b7;
+  --text-color:#0e2431;
+  --link-color:#f9b248;
+  --secondary-color:#fc3a52;
+  --nav-color:#0e2431;
+  }
+  body{
+  background-color: #fff;
+  color: var(--text-color);
+  }
+  nav{
+  height:30%;
+  background-color: var(--nav-color);
+  padding:2rem;
+  }
+  nav a{
+  padding: 0 2rem;
+  color: #fff !important;
+  }
+  h4{
+  background-color: var(--body-color);
+  border-radius: 0.3rem;
+  margin-left:2rem;
+  margin-top:2rem;
+  padding:0.2rem 0.5rem;
+  }
+  /*Styling Sign Up Form*/
+  #signup-form{
+  background-color: var(--link-color);
+  border-radius: 1rem;
+  width:50%;
+  }
+  .btn{
+  background-color:var(--nav-color);
+  color: var(--body-color);
+  }
