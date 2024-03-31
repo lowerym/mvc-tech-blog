@@ -17,7 +17,7 @@ User.init ({
     primaryKey: true,
     autoIncrement: true,
   },
-  email: {
+  username: {
     type: DataTypes.STRING,
     allowNull: false,
     unique: true
@@ -41,7 +41,7 @@ User.init ({
   timestamps: false,
   freezeTableName: true,
   underscored: true,
-  modelName: "user",
+  modelName: 'user',
 });
 
 module.exports = User;
