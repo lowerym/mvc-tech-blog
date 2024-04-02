@@ -1,5 +1,5 @@
-const sequelize = require('../config/connect')
-const {User, Blog, Comment} = require('../models')
+const sequelize = require('../config/connect');
+const {User, Blog, Comment} = require('../models');
 
 const users = [
   {
@@ -52,8 +52,8 @@ const plantSeeds = async () => {
     await Comment.bulkCreate(comments);
     process.exit(0);
   } catch(err) {
-    console.log(err)
+    console.log(err);
   }
 }
 
-plantSeeds()
+plantSeeds();
