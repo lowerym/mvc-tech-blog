@@ -3,7 +3,7 @@ const expressHandleBars = require('express-handlebars');
 const routes = require('./controllers');
 const session = require('express-session');
 const sequelize = require('./config/connect.js');
-const sequelizeStore = require('connect-session-sequelize')(session.Store);
+const SequelizeStore = require('connect-session-sequelize')(session.Store);
 require('dotenv').config();
 
 const app = express();
@@ -15,15 +15,17 @@ app.use(express.urlencoded({
   extended: true
 }));
 
-app.use(express.json());
 const sess = {
-  secret: process.env.DB_SESSION_SECRET,
+  secret: 'Super secret secret',
   cookie: {
-    maxAge: 0.5 * 60 * 60 * 1000
+    maxAge: 300000,
+    httpOnly: true,
+    secure: false,
+    sameSite: 'strict',
   },
   resave: false,
-  saveUnitilizaed: true,
-  store: new sequelizeStore({
+  saveUninitialized: true,
+  store: new SequelizeStore({
     db: sequelize
   })
 };

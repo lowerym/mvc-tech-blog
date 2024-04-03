@@ -1,0 +1,14 @@
+[
+  {
+    "body":"I learned about this in class!",
+    "blogID":"1",
+    "userID":"1",
+    "dateCreated":"May 5, 2021"
+  },
+  {
+    "body":"Very informative",
+    "blogID":"2",
+    "userID":"1",
+    "dateCreated":"October 28, 2019"
+  }
+]

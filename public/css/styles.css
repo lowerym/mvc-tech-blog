@@ -36,6 +36,38 @@
   font-weight:bold;
   box-shadow:5px 5px #a7a7a7;
   }
+  .card {
+  border: 5px solid var(--nav-color);
+  margin-top: 10px;
+  margin-bottom: 10px;
+  }
+  .card a {
+  padding: 0;
+  }
+  .card h5, .card-text {
+  padding: var(--bs-card-spacer-y) var(--bs-card-spacer-x);
+  flex: 1 1 auto;
+  }
+  .card-body {
+  background-color: var(--body-color);
+  }
+  .card-title {
+  background-color: var(--nav-color);
+  color: var(--body-color);
+  padding: 10px;
+  }
+  .card-title:after {
+  content:"";
+  display:table;
+  clear:both;
+  }
+  .card-title h3 {
+  float: left;
+  }
+  .card-title h5 {
+  float: right;
+  padding: 0;
+  }
   /*Styling Sign Up Form*/
   #signup-form{
   background-color: var(--link-color);
