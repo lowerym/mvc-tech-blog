@@ -3,85 +3,61 @@ const router = express.Router();
 const {User, Blog, Comment} = require('../../models');
 const withAuth = require('../../util/auth.js');
 
-// Get all blogs and users/comments associated with them
-router.get('/', (req, res) => {
-  Blog.findAll({include:[User, Comment]})
-  .then(dbBlogs => {
-    res.json(dbBlogs);
-  })
-  .catch(err => {
-    console.log(err);
-    res.status(500).json({ msg: "An error has occured.", err });
-  });
-});
-
-// Get one blog with their associated user & comment
-router.get('/:id', (req, res) => {
-  Blog.findByPk(req.params.id,{include:[User, Comment]})
-  .then(dbBlog => {
-    res.json(dbBlog);
-  })
-  .catch(err => {
-    console.log(err);
-    res.status(500).json({ msg: "An error has occured.", err });
-  });
-});
-
 // Create a new blog post
-router.post('/', (req, res) => {
-  if(!req.session.user){
-    return res.status(401).json({ msg: "Please Login!" })
-  }
-  Blog.create({
-    title: req.body.title,
-    content: req.body.content,
-    userID: req.session.user.id
-  })
-  .then(newBlog => {
-    res.json(newBlog);
-  })
-  .catch(err => {
+router.post('/', withAuth, async (req, res) => {
+  console.log(req.body);
+  try {
+    const newBlog = await Blog.create({
+      ...req.body,
+      user_id: req.session.user_id,
+    });
+
+    res.status(200).json(newBlog);
+  } catch (err) {
     console.log(err);
-    res.status(500).json({ msg: "An error has occured.", err });
-  });
+    res.status(400).json(err);
+  }
 });
 
 // Update a blog post
-router.put('/:id', (req, res) => {
-  if(!req.session.user){
-    return res.status(401).json({ msg: "Please Login!" })
-  }
-  Blog.update(req.body, {
-    where: {
-      id: req.params.id
+router.put('/:id', withAuth, async (req, res) => {
+  console.log(req.body);
+  try {
+    const blogData = await Blog.update(req.body, {
+      where: {
+        id: req.params.id,
+      },
+    });
+
+    if(!blogData) {
+      res.status(404).json({ message: 'No blog post has been found with this ID!' });
+      return;
     }
-  })
-  .then(updatedBlog => {
-    res.json(updatedBlog);
-  })
-  .catch(err => {
-    console.log(err);
-    res.status(500).json({ msg: "An error has occured.", err });
-  });
+    res.status(200).json(blogData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
 // Delete a blog post
-router.delete('/:id', (req, res) => {
-  if(!req.session.user){
-    return res.status(401).json({ msg: "Please Login!" })
-  }
-  Blog.destroy({
-    where: {
-      id: req.params.id
+router.delete('/:id', withAuth, async (req, res) => {
+  console.log(req.params.id);
+  try {
+    const blogData = await Blog.destroy({
+      where: {
+        id: req.params.id,
+      },
+    });
+
+    if (!blogData) {
+      res.status(404).json({ message: 'No blog post has been found with this ID!' });
+      return;
     }
-  })
-  .then(deleteBlog => {
-    res.json(deleteBlog);
-  })
-  .catch(err => {
-    console.log(err);
-    res.status(500).json({ msg: "An error has occured.", err });
-  });
+
+    res.status(200).json(blogData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
 module.exports = router;
