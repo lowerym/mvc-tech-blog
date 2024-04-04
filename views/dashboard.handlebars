@@ -1,10 +1,10 @@
 <section id="existingblogs">
 {{#each blogs}}
   <section class="card">
-      <a href="/blogs/{{id}}" class="card-body">
+      <a href="/blog/{{id}}" class="card-body">
         <div class="card-title">
           <h3>{{title}}</h3>
-          <h5>Posted on {{dateCreated}}</h5>
+          <h5>Posted on {{format_date dateCreated}}</h5>
         </div>
         <p class="card-text">{{content}}</p>
     </a>

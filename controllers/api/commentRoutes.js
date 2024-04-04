@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {User, Blog, Comment} = require('../../models');
+const { Comment } = require('../../models');
 
 // Get all comments and users/posts associated with them
 router.get('/', async (req, res) => {

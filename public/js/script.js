@@ -1,28 +1,13 @@
+var login = document.querySelector("#login-form");
+var signup = document.querySelector("#signup-form");
 var existingBlogs = document.querySelector("#existingBlogs");
 var createNew = document.querySelector("#createNew");
-var newPost = document.querySelector("#newPost");
 var newBlog = document.querySelector("#newBlog");
 var newComment = document.querySelector("#newComment");
-var login = document.querySelector("#login");
-var signup = document.querySelector("#signup");
 var update = document.querySelector("#update");
 var remove = document.querySelector("#delete");
 
-function hideCreateNew() {
-  createNew.hidden=true;
-}
-
-hideCreateNew();
-
-newPost.addEventListener("submit", event => {
-  event.preventDefault();
-  console.log('click');
-  existingBlogs.hidden=true;
-  newPost.hidden=true;
-  createNew.hidden=false;
-});
-
-newBlog.addEventListener("submit", event => {
+/*newBlog.addEventListener("submit", event => {
   var title = document.querySelector("#title").value;
   var content = document.querySelector("#content").value;
   event.preventDefault();
@@ -35,7 +20,7 @@ newBlog.addEventListener("submit", event => {
     title: title,
     content: content,
   }
-  fetch('/api/blogs', {
+  fetch('/api/blog', {
     method:'POST',
     body:JSON.stringify(blogObj),
     headers: {
@@ -49,13 +34,13 @@ newBlog.addEventListener("submit", event => {
       alert('Error - Please Try Again');
     }
   })
-})
+})*/
 
-newComment.addEventListener("submit", event => {
+/*newComment.addEventListener("submit", event => {
   event.preventDefault();
   const comment = {
     body:document.querySelector("#comment").value,
-    blodID:document.querySelector("#hiddenCommentID").value,
+    blogID:document.querySelector("#hiddenCommentID").value,
   }
   fetch('/api/comments', {
     method:'POST',
@@ -71,54 +56,28 @@ newComment.addEventListener("submit", event => {
       alert('Please Try Again!');
     }
   })
-})
+})*/
 
 login.addEventListener("submit", event => {
   event.preventDefault();
-  const userObj = {
-    username:document.querySelector('#loginUsername').value,
-    password:document.querySelector('#loginPassword').value,
-  }
-  console.log(userObj);
-  fetch('/api/users/login', {
-    method: 'POST',
-    body: JSON.stringify(userObj),
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  }).then(res => {
-    if(res.ok) {
-      console.log('You have logged in successfully!');
-      location.href='/dashboard';
-    } else {
-      alert('Please Try Again!');
-    }
-  })
-})
 
+  const username = document.querySelector('#loginUsername');
+  const password = document.querySelector('#loginPassword').value.trim();
 
-signup.addEventListener("submit",event => {
-  event.preventDefault();
-  const userObj = {
-      username:document.querySelector('#signupUsername').value,
-      password:document.querySelector('#signupPassword').value,
-  }
-  console.log(userObj)
-  fetch('/api/users/',{
+  if (username && password) {
+    const response = fetch('/api/users/login', {
       method: 'POST',
-      body: JSON.stringify(userObj),
-      headers:{
-          'Content-Type': 'application/json'
-      }
-  }).then(res=>{
-      if(res.ok) {
-          console.log('You have signed in successfully!');
-          location.href= '/dashboard';
-      } else {
-          alert('Please Try Again!');
-      }
-  })
-})
+      body: JSON.stringify({ username, password }),
+      headers: { 'Content-Type': 'application/json' },
+    });
+
+    if (response.ok) {
+      document.location.replace('/');
+    } else {
+      alert(response.statusText);
+    }
+  }
+});
 
 update.addEventListener("click",event=>{
   event.preventDefault();
@@ -129,7 +88,7 @@ update.addEventListener("click",event=>{
   }
   console.log(blogID);
   console.log(editBlog);
-  fetch((`/api/blogs/${blogID}`),{
+  fetch((`/api/blog/${blogID}`),{
       method: 'PUT',
       body:JSON.stringify(editBlog),
       headers:{
@@ -148,7 +107,7 @@ update.addEventListener("click",event=>{
 remove.addEventListener("click",event=>{
   event.preventDefault();
   const blogID = document.querySelector("#hiddenBlogID").value;
-  fetch((`/api/blogs/${blogID}`),{
+  fetch((`/api/blog/${blogID}`),{
       method: 'DELETE',
   }).then(res=>{
       if(res.ok){

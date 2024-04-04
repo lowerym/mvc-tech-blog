@@ -1,16 +1,19 @@
-<section class="card text-center">
+<section class="card">
+  <h3 class="card-title">Login</h3>
   <div class="card-body">
-    <h3 class="card-title">Login</h3>
-    <form id="login">
-      <div class="card-text">
-        <label for="loginUsername">Username</label>
-        <input type="text" placeholder="username" id="loginUsername">
+    <form class="form" id="login-form">
+      <div class="form-group mb-2">
+        <label class="form-label" for="loginUsername">Username</label>
+        <input class="form-control" type="text" placeholder="username" id="loginUsername">
       </div>
-      <div class="card-text">
-        <label for="loginPassword">Password</label>
-        <input type="text" placeholder="password" id="loginPassword">
+      <div class="form-group mb-2">
+        <label class="form-label" for="loginPassword">Password</label>
+        <input class="form-control" type="text" placeholder="password" id="loginPassword">
       </div>
-      <button>Login!</button>
+      <div class="form-group">
+        <button class="btn btn-dark" type="submit">Login</button>
+      </div>
     </form>
+    <a href="/signup"><p><strong>Sign Up Instead</strong></p></a>
   </div>
 </section>

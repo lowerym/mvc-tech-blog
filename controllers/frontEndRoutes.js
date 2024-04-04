@@ -22,7 +22,7 @@ router.get('/', async (req, res) => {
     );
 
     res.render('home', {
-      blog,
+      blogs,
       logged_in: req.session.logged_in,
     });
   } catch (err) {
@@ -62,7 +62,7 @@ router.get('/blog/:id', withAuth, async (req, res) => {
 router.get('/dashboard', withAuth, async (req, res) => {
   try {
     // Find the logged in user based on the session ID
-    const userData = await User.findByPk(req.session.user_id, {
+    const userData = await User.findByPk(req.session.userID, {
       attributes: { exclude: ['password'] },
       // Join user blog post and comment data with user data
       include: [
@@ -93,7 +93,7 @@ router.get('/create', async (req, res) => {
     if (req.session.logged_in) {
       res.render('create', {
         logged_in: req.session.logged_in,
-        userID: req.session.user_id,
+        userID: req.session.userID,
       });
       return;
     } else {
@@ -128,7 +128,7 @@ router.get('/create/:id', async (req, res) => {
       res.render('edit', {
         ...blog,
         logged_in: req.session.logged_in,
-        userID: req.session.user_id,
+        userID: req.session.userID,
       });
       return;
     } else {
@@ -146,7 +146,11 @@ router.all('/login', (req, res) => {
     return;
   }
 
-  res.render('/login');
+  res.render('login');
+});
+
+router.all('/signup', (req, res) => {
+  res.render('signup');
 });
 
 module.exports = router;

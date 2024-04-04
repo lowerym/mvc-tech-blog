@@ -1,7 +1,9 @@
+const path = require('path');
 const express = require('express');
 const expressHandleBars = require('express-handlebars');
 const routes = require('./controllers');
 const session = require('express-session');
+const helpers = require('./util/helpers');
 const sequelize = require('./config/connect.js');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 require('dotenv').config();
@@ -9,11 +11,7 @@ require('dotenv').config();
 const app = express();
 const PORT = 3002;
 
-const { User, Blog, Comment } = require('./models');
-
-app.use(express.urlencoded({
-  extended: true
-}));
+const hbs = expressHandleBars.create({ helpers });
 
 const sess = {
   secret: 'Super secret secret',
@@ -32,13 +30,14 @@ const sess = {
 
 app.use(session(sess));
 
-app.use(express.static('public'));
+app.engine("handlebars", hbs.engine);
+app.set("view engine", "handlebars");
 
-const hbs = expressHandleBars.create({});
-app.engine('handlebars', hbs.engine);
-app.set('view engine', 'handlebars');
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, "public")));
 
-app.use('/', routes);
+app.use(routes);
 
 sequelize.sync({ force: false }).then(() => {
   app.listen(PORT, () => console.log(`Server running at port ${PORT}`));
