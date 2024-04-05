@@ -1,0 +1,13 @@
+<main class="d-flex flex-column px-3 py-3">
+{{#each blogs as |blog|}}
+  <section class="card">
+    <a href="/blog/{{blog.id}}" class="card-body">
+        <div class="card-title">
+          <h3>{{blog.title}}</h3>
+          <h5>Posted by {{blog.user.name}} on {{format_date blog.date_created}}</h5>
+        </div>
+        <p class="card-text">{{blog.content}}</p>
+    </a>
+  </section>
+{{/each}}
+</main>

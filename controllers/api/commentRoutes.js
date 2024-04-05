@@ -1,14 +1,27 @@
 const router = require('express').Router();
 const { Comment } = require('../../models');
+const withAuth = require('../../utils/auth');
 
-// Get all comments and users/posts associated with them
+router.post('/', withAuth, async (req, res) => {
+  try {
+    const newComment = await Blog.create({
+      ...req.body,
+      user_id: req.session.user_id,
+    });
+
+    res.status(200).json(newComment);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+});
+
 router.get('/', async (req, res) => {
   try {
     const commentData = await Comment.findAll({
       include: [
         {
           model: User,
-          attributes: ["username"],
+          attributes: ["name"],
         },
         {
           model: Blog,
@@ -20,58 +33,21 @@ router.get('/', async (req, res) => {
   } catch (err) {
     res.status(500).json(err);
   }
-});
+})
 
-// Create a new comment
-router.post('/', async (req, res) => {
+router.delete('/:id', withAuth, async (req, res) => {
   try {
-    console.log('We Got This!');
-    const comment = await Comment.create({
-      body: req.body.body,
-      blogID: req.body.blogID,
-      userID: req.session.userID || req.body.userID,
-    });
-
-    res.status(200).json(comment);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-
-// Update a comment
-router.put('/:id', async (req, res) => {
-  try {
-    const updatedComment = await Comment.update(req.body, {
+    const comment = await Blog.destroy({
       where: {
         id: req.params.id,
       },
     });
 
-    if (!updatedComment[0]) {
-      res.status(400).json({ message: 'No comment has been found with that ID!' });
-      return;
-    }
-
-    console.log('Your comment has been updated!');
-    res.status(200).json(updatedComment);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json(err);
-  }
-});
-
-// Delete a comment
-router.delete('/:id', async (req, res) => {
-  try {
-    const comment = await Comment.destroy({
-      where: {
-        id: req.params.id,
-      },
-    });
     if (!comment) {
-      res.status(404).json({ message: 'No comment has been found with that ID!' });
+      res.status(404).json({ message: 'No comment found with this id!' });
       return;
     }
+
     res.status(200).json(comment);
   } catch (err) {
     res.status(500).json(err);

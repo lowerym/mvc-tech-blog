@@ -1,35 +1,44 @@
-<main class="d-flex flex-column px-3 py-3">
-  <section id="existingblogs">
-{{#each blogs as |blog|}}
-  <section class="card">
-      <a href="/blog/{{blog.id}}" class="card-body">
-        <div class="card-title">
-          <h3>{{blog.title}}</h3>
-          <h5>Posted on {{format_date dateCreated}}</h5>
-        </div>
-        <p class="card-text">{{content}}</p>
-    </a>
-  </section>
-{{/each}}
-</section>
-<section id="createNew" class="card text-center">
-  <h3 class="card-title">Create New Post</h3>
-  <div class="card-body">
-  <form id="newBlog">
-    <div class="card-text"></div>
-      <label for="title">Title</label><br>
-      <input type="text" id="title" placeholder="title">
-    </div>
-    <div class="card-text"></div>
-      <label for="content">Content</label>
-    <textarea id="content" placeholder="content"></textarea>
-    </div>
-    <button id="create">Create</button>
-</form>
+<div class="row">
+  <div class="col-auto">
+    <h2>Welcome, {{name}}!</h2>
+  </div>
 </div>
-</section>
-<form id="newpost">
-    <button>+ New Post</button>
-</form>
+
+<div class="row mt-4">
+  <div class="col-md-6">
+    <h3>Create a New Blog:</h3>
+
+    <form class="form new-blog-form">
+      <div class="form-group mb-2">
+        <label class="form-label" for="blog-title">blog title:</label>
+        <input class="form-input form-control" type="text" id="blog-title" name="blog-title" />
+      </div>
+      <div class="form-group mb-2">
+        <label class="form-label" for="blog-content">content:</label>
+        <textarea class="form-input form-control" id="blog-content" name="blog-content"></textarea>
+      </div>
+      <div class="form-group mb-2">
+        <button type="submit" class="btn btn-primary">Create</button>
+      </div>
+    </form>
+  </div>
+
+  {{#if blogs.length}}
+  <div class="col-md-6 blog-list">
+    <h3>Current Blogs:</h3>
+
+    {{#each blogs as |blog|}}
+    <div class="row mb-2">
+      <div class="col-md-8">
+        <h5><a href="/blog/{{blog.id}}">{{blog.title}}</a></h5>
+      </div>
+      <div class="col-md-4">
+        <button class="btn btn-sm btn-danger" data-id="{{blog.id}}">DELETE</button>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+  {{/if}}
+</div>
+
 <script src="./js/dashboard.js"></script>
-</main>
