@@ -1,5 +1,4 @@
 var login = document.querySelector("#login-form");
-var signup = document.querySelector("#signup-form");
 var existingBlogs = document.querySelector("#existingBlogs");
 var createNew = document.querySelector("#createNew");
 var newBlog = document.querySelector("#newBlog");
