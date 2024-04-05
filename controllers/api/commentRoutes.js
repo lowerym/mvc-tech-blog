@@ -1,5 +1,4 @@
-const express = require('express');
-const router = express.Router();
+const router = require('express').Router();
 const { Comment } = require('../../models');
 
 // Get all comments and users/posts associated with them
@@ -35,7 +34,6 @@ router.post('/', async (req, res) => {
 
     res.status(200).json(comment);
   } catch (err) {
-    console.error(err);
     res.status(500).json(err);
   }
 });

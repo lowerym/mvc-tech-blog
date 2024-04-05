@@ -27,7 +27,6 @@ router.post('/login', async (req, res) => {
     });
 
     if (!userData) {
-      console.log('No user has been found!');
       res.status(400).json({ message: 'You have entered an incorrect email and/or password. Please try again.' });
       return;
     }
@@ -35,7 +34,6 @@ router.post('/login', async (req, res) => {
     const validPassword = await userData.checkPassword(req.body.password);
 
     if (!validPassword) {
-      console.log('That password does not match!');
       res.status(400).json({ message: 'You have entered an incorrect email and/or password. Please try again.' });
       return;
     }

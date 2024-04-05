@@ -1,9 +1,10 @@
-<section id="existingblogs">
-{{#each blogs}}
+<main class="d-flex flex-column px-3 py-3">
+  <section id="existingblogs">
+{{#each blogs as |blog|}}
   <section class="card">
-      <a href="/blog/{{id}}" class="card-body">
+      <a href="/blog/{{blog.id}}" class="card-body">
         <div class="card-title">
-          <h3>{{title}}</h3>
+          <h3>{{blog.title}}</h3>
           <h5>Posted on {{format_date dateCreated}}</h5>
         </div>
         <p class="card-text">{{content}}</p>
@@ -12,8 +13,8 @@
 {{/each}}
 </section>
 <section id="createNew" class="card text-center">
-  <div class="card-body">
   <h3 class="card-title">Create New Post</h3>
+  <div class="card-body">
   <form id="newBlog">
     <div class="card-text"></div>
       <label for="title">Title</label><br>
@@ -30,3 +31,5 @@
 <form id="newpost">
     <button>+ New Post</button>
 </form>
+<script src="./js/dashboard.js"></script>
+</main>

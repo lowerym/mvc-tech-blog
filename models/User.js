@@ -1,7 +1,5 @@
 const { Model, DataTypes } = require('sequelize');
-
 const sequelize = require('../config/connect');
-
 const bcrypt = require('bcrypt');
 
 class User extends Model {
@@ -45,10 +43,7 @@ User.init ({
       return newUserData;
     },
     beforeUpdate: async (updatedUserData) => {
-      updatedUserData.password = await bcrypt.hash(
-        updatedUserData.password,
-        10
-      );
+      updatedUserData.password = await bcrypt.hash(updatedUserData.password, 10);
       return updatedUserData;
     },
   },

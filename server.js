@@ -1,17 +1,18 @@
 const path = require('path');
 const express = require('express');
-const expressHandleBars = require('express-handlebars');
-const routes = require('./controllers');
 const session = require('express-session');
-const helpers = require('./util/helpers');
+const exphbs = require('express-handlebars');
+const routes = require('./controllers');
+const helpers = require('./utils/helpers');
+
 const sequelize = require('./config/connect');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
-require('dotenv').config();
 
 const app = express();
-const PORT = 3002;
+const PORT = process.env.PORT || 3002;
 
-const hbs = expressHandleBars.create({ helpers });
+// Set up Handlebars.js engine with custom helpers
+const hbs = exphbs.create({ helpers });
 
 const sess = {
   secret: 'Super secret secret',
@@ -30,15 +31,16 @@ const sess = {
 
 app.use(session(sess));
 
-app.engine("handlebars", hbs.engine);
-app.set("view engine", "handlebars");
+// Inform Express.js on which template engine to use
+app.engine('handlebars', hbs.engine);
+app.set('view engine', 'handlebars');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(routes);
 
 sequelize.sync({ force: false }).then(() => {
-  app.listen(PORT, () => console.log(`Server running at port ${PORT}`));
+  app.listen(PORT, () => console.log('Now listening'));
 });
